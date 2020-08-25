@@ -39,7 +39,7 @@ class Cart extends Component {
                 .then(res => {
                     this.setState({
                         carrito: res.data
-                    })
+                    }, () => this.props.cartC(this.state.carrito.length))
                 })
                 .catch(error => {
                     console.log(error)
@@ -54,7 +54,7 @@ class Cart extends Component {
                 .then(res => {
                     this.setState({
                         carrito: res.data
-                    })
+                    }, () => this.props.cartC(this.state.carrito.length))
                 })
                 .catch(error => {
                     console.log(error)

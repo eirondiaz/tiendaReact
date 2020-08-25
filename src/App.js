@@ -23,7 +23,8 @@ class App extends Component {
 
   state = {
     logged: false,
-    user: {}
+    user: {},
+    cartCount: ''
   }
 
   componentDidMount() {
@@ -38,8 +39,14 @@ class App extends Component {
       this.setState({
         logged: true,
         user: JSON.parse(localStorage.getItem('user'))
-      }, () => console.log(this.state.logged))
+      })
     }
+  }
+
+  cartCout = (count) => {
+    this.setState({
+      cartCount: count
+    })
   }
 
   render(){
@@ -48,8 +55,8 @@ class App extends Component {
         <nav class="navbar navbar-light bg-dark">
           <Link to="/" class="navbar-brand text-light">JopiTienda</Link>
           <form class="form-inline">
-            <Link to="/cart" class="text-light font-weight-bold my-2 mx-3 my-sm-0">Cart</Link>
-
+            <Link to="/cart" class="text-light font-weight-bold my-2 mx-1 my-sm-0">Cart</Link>
+            <span class='badge badge-warning' id='lblCartCount'>{this.state.cartCount}</span>
             {
               !this.state.logged?
               <Link to="/login" class="text-light font-weight-bold my-2 mx-3 my-sm-0">Log in</Link>
@@ -84,7 +91,7 @@ class App extends Component {
             <Direccion />
           </Route>
           <Route path="/cart" exact>
-            <Cart />
+            <Cart cartC={this.cartCout}/>
           </Route>
           <Route path='/placeorder' exact>
             <PlaceOrder />
