@@ -17,6 +17,7 @@ import Registro from './Components/Registro'
 import Profile from './Components/Profile'
 import Cart from './Components/Cart'
 import Direccion from './Components/Direccion'
+import PlaceOrder from './Components/PlaceOrder'
 
 class App extends Component {
 
@@ -45,7 +46,7 @@ class App extends Component {
     return (
       <Router>
         <nav class="navbar navbar-light bg-dark">
-          <Link to="/" class="navbar-brand text-light">Navbar</Link>
+          <Link to="/" class="navbar-brand text-light">JopiTienda</Link>
           <form class="form-inline">
             <Link to="/cart" class="text-light font-weight-bold my-2 mx-3 my-sm-0">Cart</Link>
 
@@ -84,6 +85,9 @@ class App extends Component {
           </Route>
           <Route path="/cart" exact>
             <Cart />
+          </Route>
+          <Route path='/placeorder' exact>
+            <PlaceOrder />
           </Route>
           <Route path="/" exact>
             <Main />

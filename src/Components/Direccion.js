@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import CardDir from './CardDir'
 
@@ -9,12 +9,10 @@ class Direccion extends Component {
         redirect: false,
         user: {},
         direcciones: [],
-        
-            address: '',
-            ciudad: '',
-            cp: '',
-            pais: ''
-        
+        address: '',
+        ciudad: '',
+        cp: '',
+        pais: ''
     }
 
     setRedirect = () => {
@@ -32,9 +30,7 @@ class Direccion extends Component {
     handleChange = e => {
         const { name, value} = e.target
         this.setState({
-           
-                [name]: value
-            
+            [name]: value
         })
     }
 
@@ -61,31 +57,35 @@ class Direccion extends Component {
             this.setState({
                 user: JSON.parse(localStorage.getItem('user'))
             })
-        }
 
-        const u = JSON.parse(localStorage.getItem('user'))
-        axios.get('https://localhost:44381/api/usuarios/' + u.id + '/direcciones')
-            .then(res => {
-                this.setState({
-                    direcciones: res.data
+            const u = JSON.parse(localStorage.getItem('user'))
+            axios.get('https://localhost:44381/api/usuarios/' + u.id + '/direcciones')
+                .then(res => {
+                    this.setState({
+                        direcciones: res.data
+                    })
                 })
-            })
-            .catch(error => {
-                console.log(error)
-            })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
     }
 
     componentWillUpdate() {
-        const u = JSON.parse(localStorage.getItem('user'))
-        axios.get('https://localhost:44381/api/usuarios/' + u.id + '/direcciones')
-            .then(res => {
-                this.setState({
-                    direcciones: res.data
+        const log = localStorage.getItem('user')
+
+        if (log !== null) {
+            const u = JSON.parse(localStorage.getItem('user'))
+            axios.get('https://localhost:44381/api/usuarios/' + u.id + '/direcciones')
+                .then(res => {
+                    this.setState({
+                        direcciones: res.data
+                    })
                 })
-            })
-            .catch(error => {
-                console.log(error)
-            })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
     }
 
     renderEmpDir() {
@@ -119,7 +119,7 @@ class Direccion extends Component {
                                     <input type="text" onChange={this.handleChange} className="form-control" name="pais" required></input>
                                 </div>
                                 <div className="form-group">
-                                    <input type="submit" className="button primmary w-100" value="Agregar"></input>
+                                    <input type="submit" className="button primmary w-100" value="Agregar" />
                                 </div>
                             </form>
                         </div>

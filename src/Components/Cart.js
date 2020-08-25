@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
 import CardCart from './CardCart'
 
@@ -33,24 +33,51 @@ class Cart extends Component {
             this.setState({
                 user: log
             })
-        }
 
-        const u = JSON.parse(localStorage.getItem('user'))
-        axios.get('https://localhost:44381/api/usuarios/' + u.id + '/carritos')
-            .then(res => {
-                this.setState({
-                    carrito: res.data
-                }, () => console.log(this.state.carrito))
-            })
-            .catch(error => {
-                console.log(error)
-            })
+            const u = JSON.parse(localStorage.getItem('user'))
+            axios.get('https://localhost:44381/api/usuarios/' + u.id + '/carritos')
+                .then(res => {
+                    this.setState({
+                        carrito: res.data
+                    })
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+    }
+
+    componentWillUpdate() {
+        if (this.state.user !== null) {
+            const u = JSON.parse(localStorage.getItem('user'))
+            axios.get('https://localhost:44381/api/usuarios/' + u.id + '/carritos')
+                .then(res => {
+                    this.setState({
+                        carrito: res.data
+                    })
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
     }
 
     render(){
+        var p = 0
+        {
+            this.state.carrito.map(ca => (
+                p = p + (Number(ca.product.precio) * Number(ca.qty))
+            ))
+        }
         return(
-            <div className="mx-3 my-5">
+            <div className="mx-3 mb-5 mt-4">
                 {this.renderRedirect()}
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><Link to="/">Home</Link></li>
+                        <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                    </ol>
+                </nav>
                 <div className="row">
                     <div className="col-md-8">
                         <p className="float-right mr-2">Precio</p>
@@ -60,9 +87,9 @@ class Cart extends Component {
                         }
                     </div>
                     <div className="col-md-4">
-                        <div className="card px-3 py-4">
-                            <h5 className="mb-5"><b>Subtotal ({this.state.carrito.length} articulos): $195</b></h5>
-                            <input type="button" className="button primmary w-100" value="Proceder compra"></input>
+                        <div className="card px-3 py-4 alert alert-secondary">
+                            <h5 className="mb-5"><b>Subtotal ({this.state.carrito.length} articulos): ${p}</b></h5>
+                            <Link to='/placeorder'><input type="button" className="button primmary w-100" value="Proceder compra"></input></Link>
                         </div>
                     </div>
                 </div>

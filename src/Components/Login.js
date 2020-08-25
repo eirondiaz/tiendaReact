@@ -81,7 +81,7 @@ class Login extends Component {
                             </div>
                             <p>Nuevo aqui?</p>
                         </form>
-                        <button className="button seconndary text-primary w-100 mb-2" ><Link to="/registro">Crear Cuenta</Link></button>
+                        <Link to="/registro"><button className="button seconndary text-primary w-100 mb-2" >Crear Cuenta</button></Link>
                     </div>
                 </div>
             </div>

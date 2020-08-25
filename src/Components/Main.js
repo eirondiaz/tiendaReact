@@ -23,7 +23,15 @@ class Main extends Component {
 
     render(){
         return(
-            <div className="container py-5">
+            <div className="container pb-5 pt-4">
+                <div className="row">
+                    <div class="input-group input-group-sm mb-5 w-25 col-md-4 offset-md-4">
+                        <input type="text" class="form-control" placeholder="Escribe tu busqueda..."></input>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">Buscar</button>
+                        </div>
+                    </div>
+                </div>
                 <div className="row"> 
                     {
                         this.state.prod.map(prod => (

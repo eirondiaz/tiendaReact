@@ -59,8 +59,8 @@ class Profile extends Component {
                                     <input type="password" name="contraseña" className="form-control" value={this.state.user.contraseña} readOnly></input>
                                 </div>
                             </form>
-                            <button className="button primmary w-100 mb-3"><Link className="text-dark" to="/profile/direccion">Agegar direccion de envio</Link></button>
-                            <button className="button seconndary text-primary w-100 mb-2" onClick={this.logOut}><Link to="/">Log Out</Link></button>
+                            <Link to="/profile/direccion"><button className="button primmary w-100 mb-3">Agegar direccion de envio</button></Link>
+                            <Link to="/login"><button className="button seconndary text-primary w-100 mb-2" onClick={this.logOut}>Log Out</button></Link>
                         </div>
                     </div>
                     <div className="col-md-8">
