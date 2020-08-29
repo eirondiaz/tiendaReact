@@ -44,7 +44,7 @@ class Direccion extends Component {
             .catch(error => {
                 console.log(error)
             })
-        console.log(this.state)
+        e.target.reset()
     }
 
     componentDidMount() {

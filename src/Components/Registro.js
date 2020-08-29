@@ -1,82 +1,61 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
-import axios from 'axios'
 import './Ap.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { postUsuarioAction } from '../redux/usuarioDucks'
 
-class Registro extends Component {
+const Registro = () => {
 
-    state = {
-        nombre: '',
-        correo: '',
-        contraseña: '',
-        redirect: false
-    }
+    const [usuario, setUsuario] = useState({})
 
-    handleChange = e => {
+    const dispatch = useDispatch()
+    const redirect = useSelector(state => state.usuarios.redirect)
+
+    const handleChange = e => {
         const { name, value } = e.target
-        this.setState({
+        setUsuario({
+            ...usuario,
             [name]: value
         })
     }
 
-    setRedirect = () => {
-        this.setState({
-          redirect: true
-        })
-    }
-
-    renderRedirect = () => {
-        if (this.state.redirect) {
-          return <Redirect to='/login' />
-        }
-    }
-
-    handleSubmit = e => {
+    const handleSubmit = e => {
         e.preventDefault()
-        axios.post('https://localhost:44381/api/usuarios/', this.state)
-            .then(res => {
-                console.log(res)
-                this.setRedirect()
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        dispatch(postUsuarioAction(usuario))
     }
 
-    render(){
-        return(
-            <div className="row my-5">
-                {this.renderRedirect()}
-                <div className="col-md-4 offset-md-4">
-                    <div className="card px-3 py-4">
-                        <h3 className="font-weight-bold mb-4">Crear Cuenta</h3>
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="form-group">
-                                <span>Tu Nombre</span>
-                                <input type="text" className="form-control" name="nombre" onChange={this.handleChange} required></input>
-                            </div>
-                            <div className="form-group">
-                                <span>Email</span>
-                                <input type="email" className="form-control" name="correo" onChange={this.handleChange} required></input>
-                            </div>
-                            <div className="form-group">
-                                <span>Contraseña</span>
-                                <input type="password" className="form-control" name="contraseña" onChange={this.handleChange} required></input>
-                            </div>
-                            <div className="form-group">
-                                <span>Repetir contraseña</span>
-                                <input type="password" className="form-control" required></input>
-                            </div>
-                            <div className="form-group">
-                                <input type="submit" className="button primmary w-100" value="Crear tu Cuenta" required></input>
-                            </div>
-                            <p>Ya tienes una cuenta? <Link to="/login">Iniciar Sesion</Link></p>
-                        </form>
-                    </div>
+    return(
+        <div className="row my-5">
+            {redirect && <Redirect to='/login' />}
+            <div className="col-md-4 offset-md-4">
+                <div className="card px-3 py-4">
+                    <h3 className="font-weight-bold mb-4">Crear Cuenta</h3>
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <span>Tu Nombre</span>
+                            <input type="text" className="form-control" name="nombre" onChange={handleChange} required></input>
+                        </div>
+                        <div className="form-group">
+                            <span>Email</span>
+                            <input type="email" className="form-control" name="correo" onChange={handleChange} required></input>
+                        </div>
+                        <div className="form-group">
+                            <span>Contraseña</span>
+                            <input type="password" className="form-control" name="contraseña" onChange={handleChange} required></input>
+                        </div>
+                        <div className="form-group">
+                            <span>Repetir contraseña</span>
+                            <input type="password" className="form-control" required></input>
+                        </div>
+                        <div className="form-group">
+                            <input type="submit" className="button primmary w-100" value="Crear tu Cuenta" />
+                        </div>
+                        <p>Ya tienes una cuenta? <Link to="/login">Iniciar Sesion</Link></p>
+                    </form>
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default Registro

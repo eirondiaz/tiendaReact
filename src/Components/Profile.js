@@ -65,6 +65,44 @@ class Profile extends Component {
                     </div>
                     <div className="col-md-8">
                         <h4>Your Orders</h4>
+                        <table className="table table-striped">
+                            <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Paid</th>
+                                    <th scope="col">Delivered</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>981257956623756875</td>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                    <td>true</td>
+                                    <td><Link>Details</Link></td>
+                                </tr>
+                                <tr>
+                                    <td>8375687651565873658</td>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                    <td>false</td>
+                                    <td><Link>Details</Link></td>
+                                </tr>
+                                <tr>
+                                    <td>56238576857625872658</td>
+                                    <td>Larry</td>
+                                    <td>the Bird</td>
+                                    <td>@twitter</td>
+                                    <td>flase</td>
+                                    <td><Link>Details</Link></td>
+                                </tr>
+                            </tbody>
+                            </table>
                     </div>
                 </div>
             </div>
