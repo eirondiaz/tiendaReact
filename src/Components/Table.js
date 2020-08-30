@@ -10,7 +10,7 @@ class Table extends Component {
      handleDelete = d => {
         console.log('w')
         if (window.confirm('Estas de acuerdo que deseas eliminar este producto?')) {
-            axios.delete('https://localhost:44381/api/productos/' + d)
+            axios.delete('https://localhost:44348/api/productos/' + d)
             .then(res => {
                 console.log(res)
             })
@@ -21,7 +21,7 @@ class Table extends Component {
     }
     
     componentDidMount() {
-        axios.get('https://localhost:44381/api/productos/')
+        axios.get('https://localhost:44348/api/productos/')
             .then(res => {
                 this.setState({
                     posts: res.data
@@ -33,7 +33,7 @@ class Table extends Component {
     }
 
     componentDidUpdate() {
-        axios.get('https://localhost:44381/api/productos/')
+        axios.get('https://localhost:44348/api/productos/')
             .then(res => {
                 this.setState({
                     posts: res.data

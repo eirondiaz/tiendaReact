@@ -28,7 +28,7 @@ const Cart = () => {
     var p = 0
     {
         carritoList.map(ca => (
-            p = p + (Number(ca.product.precio) * Number(ca.qty))
+            p = p + (Number(ca.price) * Number(ca.quantity))
         ))
     }
     return(

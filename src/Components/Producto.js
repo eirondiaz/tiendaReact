@@ -67,8 +67,8 @@ const Producto = () => {
                         </p>
                         {
                             producto.stock === '0'?
-                            <Link to="/cart"><input type="button" onClick={() => dispatch(postCartAction(user.id, {qty: stock, productoId: Number(id)}))} className="button primmary w-100" value="Add to Cart"  disabled/></Link>
-                            : <Link to="/cart"><input type="button" onClick={() => dispatch(postCartAction(user.id, {qty: stock, productoId: Number(id)}))} className="button primmary w-100" value="Add to Cart"/></Link>
+                            <Link to="/cart"><input type="button" onClick={() => dispatch(postCartAction(user.id, {quantity: stock, productoId: Number(id)}))} className="button primmary w-100" value="Add to Cart"  disabled/></Link>
+                            : <Link to="/cart"><input type="button" onClick={() => dispatch(postCartAction(user.id, {quantity: Number(stock), productoId: Number(id)}))} className="button primmary w-100" value="Add to Cart"/></Link>
                         }
                     </div>
                 </div>

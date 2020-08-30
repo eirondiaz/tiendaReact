@@ -27,31 +27,14 @@ const PlaceOrder = () => {
     var p = 0
     {
         orders.map(ca => (
-            p = p + (Number(ca.product.precio) * Number(ca.qty))
+            p = p + (Number(ca.price) * Number(ca.quantity))
         ))
     }
 
-    var totall = (p + (Number(p) * 0.004)).toFixed(2)
-
     const order = {
-        customer: '123456',
-        total: '476.00',
-        items: [
-            {
-                sku: '313',
-                name: 'sdasda',
-                price: '434.00',
-                quantity: 1,
-                currency: 'MXN'
-            },
-            {
-                sku: '31sa3',
-                name: 'sdkjha',
-                price: '42.00',
-                quantity: 1,
-                currency: 'MXN'
-            }
-        ]
+        customer: user.Nombre,
+        total: p,
+        items: orders
     }
 
     const orderr = {
@@ -59,18 +42,18 @@ const PlaceOrder = () => {
         total: '551.00',
         items: [
           {
-            sku: '112',
+            sku: 1,
             name: 'Camisa ReactJS',
             price: '301.00',
             quantity: 1,
-            currency: 'MXN'
+            currency: 'USD'
           },
           {
-            sku: '99',
+            sku: 2,
             name: 'Camisa JS',
             price: '125.00',
             quantity: 2,
-            currency: 'MXN'
+            currency: 'USD'
           },
         ],
       };
@@ -103,7 +86,7 @@ const PlaceOrder = () => {
                 </div>
                 <div className="col-md-4">
                     <div className="card px-3 py-4 alert alert-secondary">
-                        <PaypalCheckoutButtonn order={orderr}/>
+                        <button className="btn bg-transparent" ><PaypalCheckoutButtonn order={order}/></button>
                         <button className="button primmary w-100 mb-4" disabled={orders.length === 0}>Place Order</button>
                         <h4 className="font-weight-bold mb-4">Resumen de la Orden</h4>
                         <div className="row">

@@ -11,7 +11,7 @@ const Detalles = () => {
     }, [])
 
     const getData = () => {
-        axios.get(`https://localhost:44381/api/productos/${id}`)
+        axios.get(`https://localhost:44348/api/productos/${id}`)
             .then(res => {
                 console.log(res.data)
             })

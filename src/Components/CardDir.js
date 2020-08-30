@@ -1,22 +1,31 @@
-import React from 'react'
-import { deleteCartAction } from '../redux/carritoDucks'
-import { useDispatch } from 'react-redux'
+import React, { Component } from 'react'
+import axios from 'axios'
 
-const CardDir = props => {   
+class CardDir extends Component {
 
-    const dispatch = useDispatch()
-    
-    return(
-        <div className="col-md-4 mt-2 mb-3">
-            <div className="card px-3 py-4">
-                <p><b>Direccion:</b> {props.direc.address}</p>
-                <p><b>Ciudad:</b> {props.direc.ciudad}</p>
-                <p><b>Codigo Postal:</b> {props.direc.cp}</p>
-                <p><b>Pais:</b> {props.direc.pais}</p>
-                <input type="button" onClick={() => dispatch(deleteCartAction(props.direc.id, props.direc.usuarioId))} className="btn btn-outline-dark w-100" value="Eliminar"></input>
+    deleteDir = () => {
+        axios.delete('https://localhost:44348/api/usuarios/' + this.props.direc.usuarioId + '/direcciones/' + this.props.direc.id)
+            .then(res => {
+                console.log(res)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    render(){
+        return(
+            <div className="col-md-4 mt-2 mb-3">
+                <div className="card px-3 py-4">
+                    <p><b>Direccion:</b> {this.props.direc.address}</p>
+                    <p><b>Ciudad:</b> {this.props.direc.ciudad}</p>
+                    <p><b>Codigo Postal:</b> {this.props.direc.cp}</p>
+                    <p><b>Pais:</b> {this.props.direc.pais}</p>
+                    <input type="button" onClick={this.deleteDir} className="btn btn-outline-dark w-100" value="Eliminar"></input>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default CardDir

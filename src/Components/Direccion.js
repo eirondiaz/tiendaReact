@@ -37,7 +37,7 @@ class Direccion extends Component {
     handleSubmit = e => {
         e.preventDefault()
         const u = JSON.parse(localStorage.getItem('user'))
-        axios.post('https://localhost:44381/api/usuarios/' + u.id + '/direcciones', this.state)
+        axios.post('https://localhost:44348/api/usuarios/' + u.id + '/direcciones', this.state)
             .then(res => {
                 console.log(res)
             })
@@ -59,7 +59,7 @@ class Direccion extends Component {
             })
 
             const u = JSON.parse(localStorage.getItem('user'))
-            axios.get('https://localhost:44381/api/usuarios/' + u.id + '/direcciones')
+            axios.get('https://localhost:44348/api/usuarios/' + u.id + '/direcciones')
                 .then(res => {
                     this.setState({
                         direcciones: res.data
@@ -76,7 +76,7 @@ class Direccion extends Component {
 
         if (log !== null) {
             const u = JSON.parse(localStorage.getItem('user'))
-            axios.get('https://localhost:44381/api/usuarios/' + u.id + '/direcciones')
+            axios.get('https://localhost:44348/api/usuarios/' + u.id + '/direcciones')
                 .then(res => {
                     this.setState({
                         direcciones: res.data

@@ -16,7 +16,7 @@ export default function carritoReducer(state = dataInitial, action){
 }
 
 export const getCartAction = id => async (dispatch, getState) => {
-    await axios.get('https://localhost:44381/api/usuarios/' + id + '/carritos')
+    await axios.get('https://localhost:44348/api/usuarios/' + id + '/carts')
         .then(res => {
             dispatch({
                 type: GET_CART_SUCCESS,
@@ -27,13 +27,13 @@ export const getCartAction = id => async (dispatch, getState) => {
 }
 
 export const postCartAction = (id, cart) => async (dispatch, getState) => {
-    await axios.post('https://localhost:44381/api/usuarios/' + id + '/carritos', cart)
+    await axios.post('https://localhost:44348/api/usuarios/' + id + '/carts', cart)
         .then(res => console.log('success'))
         .catch(error => console.log(error))
 }
 
 export const deleteCartAction = (idUser, idCart) => async (dispatch, getState) => {
-    await axios.delete('https://localhost:44381/api/usuarios/' + idUser + '/carritos/' + idCart)
+    await axios.delete('https://localhost:44348/api/usuarios/' + idUser + '/carts/' + idCart)
         .then(res => console.log('success'))
         .catch(error => console.log(error))
 }

@@ -19,7 +19,7 @@ class Form extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        axios.post('https://localhost:44381/api/productos/', this.state)
+        axios.post('https://localhost:44348/api/productos/', this.state)
             .then(res => {
                 console.log(res)
             })

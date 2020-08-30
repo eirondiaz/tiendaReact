@@ -1,16 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import paypal from 'paypal-checkout';
-
-
-/*
-* By AFelipe MX  @afelipelc
-*/
+import { useDispatch } from 'react-redux' 
+import { deleteCartAction } from '../redux/carritoDucks';
+import { Redirect } from 'react-router'
+import Swal from 'sweetalert2'
+import { postOrdenAction } from '../redux/ordenDucks';
 
 const PaypalCheckoutButtonn = ({ order }) => {
 
+    const dispatch = useDispatch()
+
+    const [user, setUser] = React.useState({})
+
+    React.useEffect(() =>{
+        const log = localStorage.getItem('user')
+
+        log !== null? setUser(JSON.parse(log)) : setUser({})
+    }, [])
+
   const paypalConf = {
-    currency: 'MXN',
+    currency: 'USD',
     env: 'sandbox',
     client: {
       sandbox: 'AYKg6bBe0t8kTrnwdXAOifGn6xOmsWFsakVAE2DslTwdGDZ626Zuz4mzxFRODzUbsEZaX3VCEb_xIMAo',
@@ -18,7 +28,7 @@ const PaypalCheckoutButtonn = ({ order }) => {
     },
     style: {
       label: 'pay',
-      size: 'medium', // small | medium | large | responsive
+      size: 'responsive', // small | medium | large | responsive
       shape: 'rect',   // pill | rect
       color: 'gold',  // gold | blue | silver | black
     },
@@ -54,20 +64,67 @@ const PaypalCheckoutButtonn = ({ order }) => {
     return actions.payment.execute()
       .then(response => {
         console.log(response);
-        alert(`El Pago fue procesado correctamente, ID: ${response.id}`)
+        order.items.forEach(obj => {
+            dispatch(deleteCartAction(user.id, obj.sku)) 
+        });
+        let Ar = []
+        response.transactions[0].item_list.items.forEach(element => {
+            const o = {
+                sku: Number(element.sku),
+                name: element.name,
+                price: element.price,
+                quantity: element.quantity,
+                currency: element.currency,
+                tax: element.tax
+            }
+
+            Ar.push()
+        });
+
+        const ord = {
+            id: response.id,
+            fecha: response.create_time,
+            total: response.transactions[0].amount.total,
+            usuarioId: user.id,
+            productos: JSON.stringify(response.transactions[0].item_list.items)
+        }
+        console.log(ord)
+        dispatch(postOrdenAction(user.id, ord))
+        /*alert(`El Pago fue procesado correctamente, ID: ${response.id}`)*/
+        Swal.fire(
+            'El Pago fue procesado correctamente',
+            `ID: ${response.id}`,
+            'success'
+        )
+        return <Redirect to="/" />
       })
       .catch(error => {
         console.log(error);
-	      alert('Ocurrió un error al procesar el pago con Paypal');
+          /*alert('Ocurrió un error al procesar el pago con Paypal');*/
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Ocurrió un error al procesar el pago con Paypal'
+          })
       });
   };
 
   const onError = (error) => {
-    alert ('El pago con PayPal no fue realizado, vuelva a intentarlo.' );
+    /*alert ('El pago con PayPal no fue realizado, vuelva a intentarlo.' );*/
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'El pago con PayPal no fue realizado, vuelva a intentarlo.'
+      })
   };
 
   const onCancel = (data, actions) => {
-    alert( 'El pago con PayPal no fue realizado, el usuario canceló el proceso.' );
+    /*alert( 'El pago con PayPal no fue realizado, el usuario canceló el proceso.' );*/
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'El pago con PayPal no fue realizado, el usuario canceló el proceso.'
+      })
   };
 
 
