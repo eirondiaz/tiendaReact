@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
 import './Ap.css'
+import { url } from './ApiUrl'
 
 class Login extends Component {
 
@@ -34,7 +35,7 @@ class Login extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        axios.post('https://localhost:44348/api/login/', this.state)
+        axios.post(url + '/login/', this.state)
             .then(res => {
                 this.setState({
                     user: res.data

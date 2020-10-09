@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { url } from './ApiUrl'
 
 class Table extends Component {
 
@@ -10,7 +11,7 @@ class Table extends Component {
      handleDelete = d => {
         console.log('w')
         if (window.confirm('Estas de acuerdo que deseas eliminar este producto?')) {
-            axios.delete('https://localhost:44348/api/productos/' + d)
+            axios.delete(url + '/productos/' + d)
             .then(res => {
                 console.log(res)
             })
@@ -21,7 +22,7 @@ class Table extends Component {
     }
     
     componentDidMount() {
-        axios.get('https://localhost:44348/api/productos/')
+        axios.get(url + '/productos/')
             .then(res => {
                 this.setState({
                     posts: res.data
@@ -33,7 +34,7 @@ class Table extends Component {
     }
 
     componentDidUpdate() {
-        axios.get('https://localhost:44348/api/productos/')
+        axios.get(url + '/productos/')
             .then(res => {
                 this.setState({
                     posts: res.data

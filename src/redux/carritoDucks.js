@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { url } from './../Components/ApiUrl'
 
 const dataInitial = {
     cartList: []
@@ -16,7 +17,7 @@ export default function carritoReducer(state = dataInitial, action){
 }
 
 export const getCartAction = id => async (dispatch, getState) => {
-    await axios.get('https://localhost:44348/api/usuarios/' + id + '/carts')
+    await axios.get(url + '/usuarios/' + id + '/carts')
         .then(res => {
             dispatch({
                 type: GET_CART_SUCCESS,
@@ -27,13 +28,13 @@ export const getCartAction = id => async (dispatch, getState) => {
 }
 
 export const postCartAction = (id, cart) => async (dispatch, getState) => {
-    await axios.post('https://localhost:44348/api/usuarios/' + id + '/carts', cart)
+    await axios.post(url + '/usuarios/' + id + '/carts', cart)
         .then(res => console.log('success'))
         .catch(error => console.log(error))
 }
 
 export const deleteCartAction = (idUser, idCart) => async (dispatch, getState) => {
-    await axios.delete('https://localhost:44348/api/usuarios/' + idUser + '/carts/' + idCart)
+    await axios.delete(url + '/usuarios/' + idUser + '/carts/' + idCart)
         .then(res => console.log('success'))
         .catch(error => console.log(error))
 }

@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom'
 import CardCart from './CardCart'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCartAction } from '../redux/carritoDucks'
+import { getProductByIdAction } from '../redux/productoDucks'
 
 const Cart = () => {
 
@@ -11,6 +12,7 @@ const Cart = () => {
 
     const dispatch = useDispatch()
     const carritoList = useSelector(state => state.carritos.cartList)
+    const prodById = useSelector(state => state.productos.productById)
 
     const settRedirect = () => {
         setRedirect({
@@ -22,7 +24,7 @@ const Cart = () => {
         const log = localStorage.getItem('user')
 
         log === null? settRedirect() : setUser(log)  
-        log === null? settRedirect() : dispatch(getCartAction(JSON.parse(log).id))  
+        log === null? settRedirect() : dispatch(getCartAction(JSON.parse(log).id))
     }, [carritoList])
 
     var p = 0
@@ -45,7 +47,10 @@ const Cart = () => {
                     <p className="float-right mr-2">Precio</p>
                     <h3>Your Cart</h3>
                     {
-                        carritoList.map(ca => <CardCart key={ca.id} prod={ca}/>)
+                        carritoList.map(ca => (
+                            //dispatch(getProductByIdAction(ca.productoId)),
+                            <CardCart key={ca.id} prod={ca} />
+                        ))
                     }
                     {carritoList.length === 0? <p className="text-center display-3 my-5">Carrito Vacío</p>: null}
                 </div>

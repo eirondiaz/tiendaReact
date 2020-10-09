@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { url } from './ApiUrl'
 
 class CardDir extends Component {
 
     deleteDir = () => {
-        axios.delete('https://localhost:44348/api/usuarios/' + this.props.direc.usuarioId + '/direcciones/' + this.props.direc.id)
+        axios.delete(url + '/usuarios/' + this.props.direc.usuarioId + '/direcciones/' + this.props.direc.id)
             .then(res => {
                 console.log(res)
             })

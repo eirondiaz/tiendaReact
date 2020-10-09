@@ -1,0 +1,1 @@
+export const url = 'http://eirondiaz1-001-site1.atempurl.com/api'

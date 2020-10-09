@@ -21,6 +21,7 @@ import Direccion from './Components/Direccion'
 import PlaceOrder from './Components/PlaceOrder'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCartAction } from './redux/carritoDucks'
+import OrderDetails from './Components/orderUserDetails/OrderDetails'
 
 const App = () => {
 
@@ -77,6 +78,9 @@ const App = () => {
         </Route>
         <Route path="/profile" exact>
           <Profile />
+        </Route>
+        <Route path="/orderdetails/:id" exact>
+          <OrderDetails />
         </Route>
         <Route path="/profile/direccion" exact>
           <Direccion />

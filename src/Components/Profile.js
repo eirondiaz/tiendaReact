@@ -66,10 +66,10 @@ const Profile = () => {
                                         <tr>
                                             <td>{ord.id}</td>
                                             <td>{ord.fecha}</td>
-                                            <td>{ord.total}</td>
+                                            <td>${ord.total}</td>
                                             <td>true</td>
                                             <td>false</td>
-                                            <td><Link>Details</Link></td>
+                                            <td><Link to={`/orderdetails/${ord.id}`}>Details</Link></td>
                                         </tr>
                                     ))
                                 }

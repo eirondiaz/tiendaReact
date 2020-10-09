@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { url } from './../Components/ApiUrl'
 
 const initialState = {
     redirect: false
@@ -16,7 +17,7 @@ export default function usuarioReducer(state = initialState, action) {
 }
 
 export const postUsuarioAction = user => async dispatch => {
-    await axios.post('https://localhost:44348/api/usuarios/', user)
+    await axios.post(url + '/usuarios/', user)
         .then(res => {
             dispatch({
                 type: POST_USUARIO_SUCCESS,

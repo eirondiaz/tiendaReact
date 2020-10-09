@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { url } from './../Components/ApiUrl'
 
 const dataInitial = {
     productList: [],
@@ -20,7 +21,7 @@ export default function productReducer(state = dataInitial, action) {
 }
 
 export const getProductListAction = () => async (dispatch, getState) => {
-    await axios.get('https://localhost:44348/api/productos/')
+    await axios.get(url + '/productos/')
         .then(res => {
             dispatch({
                 type: GET_PRODUCTLIST_SUCCESS,
@@ -33,7 +34,7 @@ export const getProductListAction = () => async (dispatch, getState) => {
 }
 
 export const getProductByIdAction = id => async (dispatch, getState) => {
-    await axios.get('https://localhost:44348/api/productos/' + id)
+    await axios.get(url + '/productos/' + id)
         .then(res => {
             dispatch({
                 type: GET_PRODUCT_BY_ID_SUCCESS,
@@ -44,7 +45,7 @@ export const getProductByIdAction = id => async (dispatch, getState) => {
 }
 
 export const postProductAction = product => async (dispatch, getState) => {
-    await axios.post('https://localhost:44348/api/productos/', product)
+    await axios.post(url + '/productos/', product)
         .then(res => console.log('success'))
         .catch(error => console.log('success'))
 }

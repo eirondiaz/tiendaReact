@@ -1,6 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import { url } from './ApiUrl'
 
 const Detalles = () => {
 
@@ -11,7 +12,7 @@ const Detalles = () => {
     }, [])
 
     const getData = () => {
-        axios.get(`https://localhost:44348/api/productos/${id}`)
+        axios.get(url + `/productos/${id}`)
             .then(res => {
                 console.log(res.data)
             })

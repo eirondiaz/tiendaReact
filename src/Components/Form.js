@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { url } from './ApiUrl'
 
 class Form extends Component {
 
@@ -7,7 +8,8 @@ class Form extends Component {
         nombre: '',
         categoria: '',
         precio: '',
-        stock: ''
+        stock: '',
+        foto: ''
     }
 
     handleChange = e => {
@@ -17,20 +19,42 @@ class Form extends Component {
         })
     }
 
+    uploadImage = async e => {
+        const files = e.target.files
+        const data = new FormData() 
+        data.append('file', files[0])
+        data.append('upload_preset', 'yxgruubw')
+
+        const res = await fetch(
+            'https://api.cloudinary.com/v1_1/drjkf0hig/image/upload', 
+            {
+                method: 'POST',
+                body: data
+            }
+        )   
+
+        const file = await res.json()
+
+        this.setState({
+            foto: file.secure_url
+        })
+    }        
+
     handleSubmit = e => {
         e.preventDefault()
-        axios.post('https://localhost:44348/api/productos/', this.state)
+        axios.post(url + '/productos/', this.state)
             .then(res => {
                 console.log(res)
             })
             .catch(error => {
                 console.log(error)
             })
+        e.target.reset()    
     }
 
     render(){
         return(
-            <div className="col-md-4">
+            <div className="col-md-4 mb-5">
                 <div className="card p-4">
                     <form onSubmit={this.handleSubmit}>
                         <div className="input-group mb-3">
@@ -44,6 +68,12 @@ class Form extends Component {
                                 <span className="input-group-text" id="basic-addon1"><i className="fas fa-tags"></i></span>
                             </div>
                             <input type="text" onChange={this.handleChange} name="categoria" className="form-control" placeholder="Categoria" required></input>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input type="file" name="file" class="custom-file-input" onChange={this.uploadImage} required id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" />
+                                <label class="custom-file-label" for="inputGroupFile01">Subir foto</label>
+                            </div>
                         </div>
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">

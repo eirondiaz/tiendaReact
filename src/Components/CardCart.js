@@ -1,12 +1,23 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react' 
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { getProductByIdAction } from '../redux/productoDucks'
+import { url } from './ApiUrl'
 
-class CardCart extends Component {
+const CardCart = ({ prod }) => {
 
-    deleteCart = () => {
+    const dispatch = useDispatch()
+    const producto = useSelector(state => state.productos.productById)
+
+    useEffect(() => {
+        dispatch(getProductByIdAction(prod.productoId))
+        //console.log(producto)
+    }, [])
+
+    const deleteCart = () => {
         const u = JSON.parse(localStorage.getItem('user'))
-        axios.delete('https://localhost:44348/api/usuarios/' + u.id + '/carts/' + this.props.prod.sku)
+        axios.delete(url + '/usuarios/' + u.id + '/carts/' + prod.id)
             .then(res => {
                 console.log(res.data)
             })
@@ -14,27 +25,25 @@ class CardCart extends Component {
                 console.log(error)
             })
     }
-
-    render(){
-        return(
-            <div className="mb-2">
-                <div className="card px-2 py-2">
-                    <div className="row">
-                        <div className="col-md-2">
-                            <div className="px-3">
-                                <img width="50px" height="80px" src="https://mms-images-prod.imgix.net/mms/images/catalog/b65970c681d6fa3ea1b6760d3c137415/colors/116223/views/alt/front_medium_extended.png?ixlib=rails-2.1.4&w=240&h=300&fit=crop&dpr=1&q=39&fm=png&auto=format" className="card-img-top" alt="..."></img>
-                            </div>
+    
+    return(
+        <div className="mb-2">
+            <div className="card px-2 py-2">
+                <div className="row">
+                    <div className="col-md-2">
+                        <div className="px-3">
+                            <img width="50px" height="80px" src={producto.foto} className="card-img-top" alt="..."></img>
                         </div>
-                        <div className="col-md-10">
-                            <p className="float-right text-danger font-weight-bold mr-2">${Number(this.props.prod.price) * Number(this.props.prod.quantity)}</p>
-                            <Link className="font-weight-bold" to={`/producto/${this.props.prod.productoId}`}><h5>{this.props.prod.name}</h5></Link>
-                            <p><b>Qty: </b> {this.props.prod.quantity} <span className="ml-2"><button onClick={this.deleteCart} className="btn btn-outline-dark btn-sm">Eliminar</button></span></p>
-                        </div>
+                    </div>
+                    <div className="col-md-10">
+                        <p className="float-right text-danger font-weight-bold mr-2">${Number(prod.price) * Number(prod.quantity)}</p>
+                        <Link className="font-weight-bold" to={`/producto/${prod.productoId}`}><h5>{prod.name}</h5></Link>
+                        <p><b>Qty: </b> {prod.quantity} <span className="ml-2"><button onClick={deleteCart} className="btn btn-outline-dark btn-sm">Eliminar</button></span></p>
                     </div>
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default CardCart

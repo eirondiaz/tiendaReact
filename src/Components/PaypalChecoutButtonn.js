@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import paypal from 'paypal-checkout';
-import { useDispatch } from 'react-redux' 
-import { deleteCartAction } from '../redux/carritoDucks';
+import { useDispatch, useSelector } from 'react-redux' 
+import { deleteCartAction, getCartAction } from '../redux/carritoDucks';
 import { Redirect } from 'react-router'
 import Swal from 'sweetalert2'
 import { postOrdenAction } from '../redux/ordenDucks';
@@ -10,6 +10,7 @@ import { postOrdenAction } from '../redux/ordenDucks';
 const PaypalCheckoutButtonn = ({ order }) => {
 
     const dispatch = useDispatch()
+    const carrito = useSelector(state => state.carritos.cartList)
 
     const [user, setUser] = React.useState({})
 
@@ -30,7 +31,7 @@ const PaypalCheckoutButtonn = ({ order }) => {
       label: 'pay',
       size: 'responsive', // small | medium | large | responsive
       shape: 'rect',   // pill | rect
-      color: 'gold',  // gold | blue | silver | black
+      color: 'black',  // gold | blue | silver | black
     },
   };
 
@@ -65,12 +66,15 @@ const PaypalCheckoutButtonn = ({ order }) => {
       .then(response => {
         console.log(response);
         order.items.forEach(obj => {
-            dispatch(deleteCartAction(user.id, obj.sku)) 
+          dispatch(deleteCartAction(user.id, obj.sku)) 
         });
+
+        dispatch(getCartAction(user.id))
+
         let Ar = []
-        response.transactions[0].item_list.items.forEach(element => {
+        response.transactions[0].item_list.items.forEach(function(element, i) {
             const o = {
-                sku: Number(element.sku),
+                sku: element.sku,
                 name: element.name,
                 price: element.price,
                 quantity: element.quantity,
@@ -88,9 +92,11 @@ const PaypalCheckoutButtonn = ({ order }) => {
             usuarioId: user.id,
             productos: JSON.stringify(response.transactions[0].item_list.items)
         }
+
+        //console.log(Ar)
         console.log(ord)
         dispatch(postOrdenAction(user.id, ord))
-        /*alert(`El Pago fue procesado correctamente, ID: ${response.id}`)*/
+
         Swal.fire(
             'El Pago fue procesado correctamente',
             `ID: ${response.id}`,
